@@ -1,2 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
+usage() {
+    echo "Usage: project-init [target-dir]" >&2
+    echo "Creates .nunoya_private/workspace/<name>.code-workspace in target-dir (default: .)" >&2
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    usage
+    exit 0
+fi
+
+# resolve symlinks so templates/ is found even when this is symlinked onto PATH
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+TEMPLATES_DIR="$SCRIPT_DIR/../templates"
+
+TARGET_DIR="${1:-.}"
+TARGET_DIR="$(cd "$TARGET_DIR" && pwd)"
+PROJECT_NAME="$(basename "$TARGET_DIR")"
+
+WORKSPACE_DIR="$TARGET_DIR/.nunoya_private/workspace"
+WORKSPACE_FILE="$WORKSPACE_DIR/${PROJECT_NAME}.code-workspace"
+
+# refuse to overwrite: this may contain manual edits made after generation
+if [[ -e "$WORKSPACE_FILE" ]]; then
+    echo "error: $WORKSPACE_FILE already exists" >&2
+    exit 1
+fi
+
+mkdir -p "$WORKSPACE_DIR"
+cp "$TEMPLATES_DIR/default.code-workspace" "$WORKSPACE_FILE"
+
+echo "created $WORKSPACE_FILE"
