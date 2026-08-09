@@ -3,7 +3,8 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .nunoya_private/workspace/<name>.code-workspace in target-dir (default: .)" >&2
+    echo "Creates .nunoya_private/ files (workspace, note.md) in target-dir (default: .) from templates/" >&2
+    echo "Files that already exist are left untouched and skipped." >&2
 }
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
@@ -19,17 +20,25 @@ TEMPLATES_DIR="$SCRIPT_DIR/../templates"
 TARGET_DIR="${1:-.}"
 TARGET_DIR="$(cd "$TARGET_DIR" && pwd)"
 PROJECT_NAME="$(basename "$TARGET_DIR")"
+PRIVATE_DIR="$TARGET_DIR/.nunoya_private"
 
-WORKSPACE_DIR="$TARGET_DIR/.nunoya_private/workspace"
-WORKSPACE_FILE="$WORKSPACE_DIR/${PROJECT_NAME}.code-workspace"
+# render a template into dest, substituting {{PROJECT_NAME}}.
+# skip (never overwrite) if dest already exists: it may contain manual edits made after generation
+render() {
+    local template="$1" dest="$2"
+    if [[ -e "$dest" ]]; then
+        echo "skip: $dest already exists"
+        return
+    fi
+    mkdir -p "$(dirname "$dest")"
+    # bash's replacement string treats & as "whole match" (like sed); escape it and \ first
+    local escaped_name="${PROJECT_NAME//\\/\\\\}"
+    escaped_name="${escaped_name//&/\\&}"
+    local content
+    content="$(cat "$template")"
+    printf '%s\n' "${content//\{\{PROJECT_NAME\}\}/$escaped_name}" > "$dest"
+    echo "created $dest"
+}
 
-# refuse to overwrite: this may contain manual edits made after generation
-if [[ -e "$WORKSPACE_FILE" ]]; then
-    echo "error: $WORKSPACE_FILE already exists" >&2
-    exit 1
-fi
-
-mkdir -p "$WORKSPACE_DIR"
-cp "$TEMPLATES_DIR/default.code-workspace" "$WORKSPACE_FILE"
-
-echo "created $WORKSPACE_FILE"
+render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/workspace/${PROJECT_NAME}.code-workspace"
+render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
