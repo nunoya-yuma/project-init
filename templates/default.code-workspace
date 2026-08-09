@@ -1,0 +1,20 @@
+{
+    "folders": [
+        {
+            "path": "../../"
+        }
+    ],
+    "settings": {
+        "terminal.integrated.env.linux": {
+            "PATH": "${workspaceFolder}/nunoya_private/scripts:${env:PATH}",
+        },
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": []
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": []
+    }
+}
