@@ -1,0 +1,39 @@
+# --- General ---
+.env
+.env.*
+!.env.example
+*.log
+.idea/
+*.bak
+*.orig
+*.tmp
+.cache/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# --- C ---
+*.o
+*.obj
+*.out
+*.exe
+*.a
+*.so
+*.dylib
+
+# --- Rust ---
+/target/
+
+# --- OS junk ---
+.DS_Store
+*.swp
