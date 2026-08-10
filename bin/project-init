@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .nunoya_private/ files (workspace, note.md) in target-dir (default: .) from templates/" >&2
+    echo "Creates .nunoya_private/ files (workspace, note.md) and .gitignore in target-dir (default: .) from templates/" >&2
     echo "Files that already exist are left untouched and skipped." >&2
 }
 
@@ -42,3 +42,4 @@ render() {
 
 render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/workspace/${PROJECT_NAME}.code-workspace"
 render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
+render "$TEMPLATES_DIR/.gitignore" "$TARGET_DIR/.gitignore"
