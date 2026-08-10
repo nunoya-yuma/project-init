@@ -9,12 +9,105 @@
             "PATH": "${workspaceFolder}/nunoya_private/scripts:${env:PATH}",
         },
     },
+    // Language-specific tasks/launch configs below are starting points.
+    // Delete whatever doesn't apply to this project, keep/extend the rest.
     "tasks": {
         "version": "2.0.0",
-        "tasks": []
+        "tasks": [
+            {
+                "label": "Python: Run current file",
+                "type": "shell",
+                "command": "python3",
+                "args": ["${file}"],
+                "problemMatcher": [],
+            },
+            {
+                "label": "Python: pytest",
+                "type": "shell",
+                "command": "pytest",
+                "problemMatcher": [],
+            },
+            {
+                "label": "Bash: shellcheck current file",
+                "type": "shell",
+                "command": "shellcheck",
+                "args": ["${file}"],
+                "problemMatcher": [],
+            },
+            {
+                "label": "Bash: run current script (bash -x)",
+                "type": "shell",
+                "command": "bash",
+                "args": ["-x", "${file}"],
+                "problemMatcher": [],
+            },
+            {
+                "label": "C: build current file (gcc)",
+                "type": "shell",
+                "command": "gcc",
+                "args": ["-g", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"],
+                "group": { "kind": "build" },
+                "problemMatcher": ["$gcc"],
+            },
+            {
+                "label": "Rust: cargo build",
+                "type": "shell",
+                "command": "cargo",
+                "args": ["build"],
+                "group": { "kind": "build" },
+                "problemMatcher": ["$rustc"],
+            },
+            {
+                "label": "Rust: cargo run",
+                "type": "shell",
+                "command": "cargo",
+                "args": ["run"],
+                "problemMatcher": ["$rustc"],
+            },
+        ],
     },
     "launch": {
         "version": "0.2.0",
-        "configurations": []
-    }
+        "configurations": [
+            {
+                // requires the ms-python.python extension
+                "name": "Python: Debug current file",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "justMyCode": true,
+            },
+            {
+                // requires the ms-vscode.cpptools extension
+                "name": "C: Debug current file (gdb)",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${fileDirname}/${fileBasenameNoExtension}",
+                "args": [],
+                "cwd": "${fileDirname}",
+                "MIMode": "gdb",
+                "preLaunchTask": "C: build current file (gcc)",
+            },
+            {
+                // requires the vadimcn.vscode-lldb extension; assumes the workspace-root package name matches the folder name
+                "name": "Rust: Debug executable (cargo build)",
+                "type": "lldb",
+                "request": "launch",
+                "program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
+                "cwd": "${workspaceFolder}",
+                "preLaunchTask": "Rust: cargo build",
+            },
+            {
+                // requires the rogalmic.bash-debug extension
+                "name": "Bash: Debug current script (bashdb)",
+                "type": "bashdb",
+                "request": "launch",
+                "program": "${file}",
+                "cwd": "${workspaceFolder}",
+                "args": [],
+                "terminalKind": "integrated",
+            },
+        ],
+    },
 }
