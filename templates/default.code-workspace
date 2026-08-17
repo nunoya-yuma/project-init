@@ -6,7 +6,7 @@
     ],
     "settings": {
         "terminal.integrated.env.linux": {
-            "PATH": "${workspaceFolder}/nunoya_private/scripts:${env:PATH}",
+            "PATH": "${workspaceFolder}/.private-scratch/scripts:${env:PATH}",
         },
     },
     // Language-specific tasks/launch configs below are starting points.
@@ -18,7 +18,9 @@
                 "label": "Python: Run current file",
                 "type": "shell",
                 "command": "python3",
-                "args": ["${file}"],
+                "args": [
+                    "${file}"
+                ],
                 "problemMatcher": [],
             },
             {
@@ -31,38 +33,62 @@
                 "label": "Bash: shellcheck current file",
                 "type": "shell",
                 "command": "shellcheck",
-                "args": ["${file}"],
+                "args": [
+                    "${file}"
+                ],
                 "problemMatcher": [],
             },
             {
                 "label": "Bash: run current script (bash -x)",
                 "type": "shell",
                 "command": "bash",
-                "args": ["-x", "${file}"],
+                "args": [
+                    "-x",
+                    "${file}"
+                ],
                 "problemMatcher": [],
             },
             {
                 "label": "C: build current file (gcc)",
                 "type": "shell",
                 "command": "gcc",
-                "args": ["-g", "${file}", "-o", "${fileDirname}/${fileBasenameNoExtension}"],
-                "group": { "kind": "build" },
-                "problemMatcher": ["$gcc"],
+                "args": [
+                    "-g",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}/${fileBasenameNoExtension}"
+                ],
+                "group": {
+                    "kind": "build"
+                },
+                "problemMatcher": [
+                    "$gcc"
+                ],
             },
             {
                 "label": "Rust: cargo build",
                 "type": "shell",
                 "command": "cargo",
-                "args": ["build"],
-                "group": { "kind": "build" },
-                "problemMatcher": ["$rustc"],
+                "args": [
+                    "build"
+                ],
+                "group": {
+                    "kind": "build"
+                },
+                "problemMatcher": [
+                    "$rustc"
+                ],
             },
             {
                 "label": "Rust: cargo run",
                 "type": "shell",
                 "command": "cargo",
-                "args": ["run"],
-                "problemMatcher": ["$rustc"],
+                "args": [
+                    "run"
+                ],
+                "problemMatcher": [
+                    "$rustc"
+                ],
             },
         ],
     },
