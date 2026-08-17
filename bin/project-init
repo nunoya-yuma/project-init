@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .nunoya_private/ files (workspace, note.md, test-list.md) and .gitignore in target-dir (default: .) from templates/" >&2
+    echo "Creates .private-scratch/ files (workspace, note.md, test-list.md) and .gitignore in target-dir (default: .) from templates/" >&2
     echo "Files that already exist are left untouched and skipped." >&2
 }
 
@@ -20,7 +20,7 @@ TEMPLATES_DIR="$SCRIPT_DIR/../templates"
 TARGET_DIR="${1:-.}"
 TARGET_DIR="$(cd "$TARGET_DIR" && pwd)"
 PROJECT_NAME="$(basename "$TARGET_DIR")"
-PRIVATE_DIR="$TARGET_DIR/.nunoya_private"
+PRIVATE_DIR="$TARGET_DIR/.private-scratch"
 
 # render a template into dest, substituting {{PROJECT_NAME}}.
 # skip (never overwrite) if dest already exists: it may contain manual edits made after generation
