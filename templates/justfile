@@ -2,5 +2,8 @@
 # Untracked (see dotfiles' global git ignore) — run recipes with `ju <recipe>`,
 # not `just`, since this file isn't named `justfile` and won't be auto-discovered.
 
-# list:
-#     ju --list
+default:
+    @just --list --justfile {{justfile()}}
+
+# example:
+#     echo "hello from {{PROJECT_NAME}}"
