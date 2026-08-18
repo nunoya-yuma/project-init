@@ -1,0 +1,6 @@
+# Personal command shortcuts for {{PROJECT_NAME}}.
+# Untracked (see dotfiles' global git ignore) — run recipes with `ju <recipe>`,
+# not `just`, since this file isn't named `justfile` and won't be auto-discovered.
+
+# list:
+#     ju --list
