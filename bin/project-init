@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .private-scratch/ files (workspace, note.md, test-list.md, justfile) and .gitignore in target-dir (default: .) from templates/" >&2
+    echo "Creates .private-scratch/ files (workspace, note.md, test-list.md, justfile) in target-dir (default: .) from templates/" >&2
     echo "Files that already exist are left untouched and skipped." >&2
 }
 
@@ -44,4 +44,3 @@ render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/workspace/${PROJECT
 render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
 render "$TEMPLATES_DIR/test-list.md" "$PRIVATE_DIR/test-list.md"
 render "$TEMPLATES_DIR/justfile" "$PRIVATE_DIR/justfile"
-render "$TEMPLATES_DIR/.gitignore" "$TARGET_DIR/.gitignore"
