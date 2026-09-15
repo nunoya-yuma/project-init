@@ -40,7 +40,7 @@ render() {
     echo "created $dest"
 }
 
-render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/workspace/${PROJECT_NAME}.code-workspace"
+render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/${PROJECT_NAME}.code-workspace"
 render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
 render "$TEMPLATES_DIR/test-list.md" "$PRIVATE_DIR/test-list.md"
 render "$TEMPLATES_DIR/justfile" "$PRIVATE_DIR/justfile"

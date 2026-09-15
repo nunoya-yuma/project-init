@@ -1,7 +1,7 @@
 # project-init
 
 Personal scaffold tool, run at the start of each new project to set up
-`.private-scratch/workspace/` from templates in `templates/`.
+`.private-scratch/` from templates in `templates/`.
 
 ## Development setup
 
