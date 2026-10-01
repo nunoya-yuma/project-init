@@ -8,7 +8,6 @@
 - 新機能を検討する際は、先に個人のdotfilesリポジトリ（GitHub:
   `nunoya-yuma/dotfiles`。ローカルの配置場所は固定していないので、
   見当たらなければユーザーに確認する）と役割が被っていないか確認する。
-  特に `core.hooksPath` とgitのグローバルexcludesファイルは、
-  dotfilesリポジトリの `git/gitconfig` / `git/ignore` でマシン全体に
-  設定済みのことが多いため、project-init側でリポジトリローカルに同種の
-  設定を行うと上書き・衝突する可能性がある。
+  特に `core.hooksPath` は、dotfilesリポジトリの `git/gitconfig` で
+  マシン全体に設定済みのことが多いため、project-init側でリポジトリ
+  ローカルに同種の設定を行うと上書き・衝突する可能性がある。
