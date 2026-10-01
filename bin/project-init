@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .private-scratch/ files (workspace, note.md, test-list.md, justfile) in target-dir (default: .) from templates/" >&2
+    echo "Creates .private-scratch/ files (.gitignore, workspace, note.md, test-list.md, justfile) in target-dir (default: .) from templates/" >&2
     echo "Files that already exist are left untouched and skipped." >&2
 }
 
@@ -40,6 +40,9 @@ render() {
     echo "created $dest"
 }
 
+# self-ignoring dir: stays out of git even where the global excludesFile isn't set up.
+# template is named without the dot so it doesn't ignore templates/ in this repo
+render "$TEMPLATES_DIR/gitignore" "$PRIVATE_DIR/.gitignore"
 render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/${PROJECT_NAME}.code-workspace"
 render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
 render "$TEMPLATES_DIR/test-list.md" "$PRIVATE_DIR/test-list.md"
