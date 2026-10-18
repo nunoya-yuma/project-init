@@ -3,7 +3,7 @@ set -euo pipefail
 
 usage() {
     echo "Usage: project-init [target-dir]" >&2
-    echo "Creates .private-scratch/ files (.gitignore, workspace, note.md, test-list.md, justfile) in target-dir (default: .) from templates/" >&2
+    echo "Creates .private-scratch/ files (.gitignore, workspace, note.md, test-list.md, justfile, AGENTS.md) in target-dir (default: .) from templates/" >&2
     echo "Files that already exist are left untouched and skipped." >&2
 }
 
@@ -47,3 +47,6 @@ render "$TEMPLATES_DIR/default.code-workspace" "$PRIVATE_DIR/${PROJECT_NAME}.cod
 render "$TEMPLATES_DIR/note.md" "$PRIVATE_DIR/note.md"
 render "$TEMPLATES_DIR/test-list.md" "$PRIVATE_DIR/test-list.md"
 render "$TEMPLATES_DIR/justfile" "$PRIVATE_DIR/justfile"
+# personal agent instructions; the global agent rules read this file if it exists.
+# template is not named AGENTS.md so agents working in this repo don't load it as templates/ instructions
+render "$TEMPLATES_DIR/private-agents.md" "$PRIVATE_DIR/AGENTS.md"
