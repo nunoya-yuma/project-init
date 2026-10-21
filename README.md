@@ -10,8 +10,12 @@ machines without the dotfiles global excludesFile, and the project's own
 
 ## Development setup
 
-Enable the tracked git hooks (runs shellcheck on staged shell scripts before commit):
+Enable the tracked git hook (runs shellcheck on staged shell scripts before commit):
 
 ```sh
-git config core.hooksPath githooks
+ln -s ../../githooks/pre-commit .git/hooks/pre-commit
 ```
+
+Don't set a repo-local `core.hooksPath`: it would override the global one
+from dotfiles, whose hooks chain to `.git/hooks/pre-commit` themselves.
+Without dotfiles, git runs `.git/hooks/pre-commit` directly.
