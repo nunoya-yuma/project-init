@@ -113,26 +113,58 @@
                 "args": [],
                 "cwd": "${fileDirname}",
                 "MIMode": "gdb",
+                "setupCommands": [
+                    {
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true,
+                    },
+                ],
                 "preLaunchTask": "C: build current file (gcc)",
             },
             {
-                // requires the vadimcn.vscode-lldb extension; assumes the workspace-root package name matches the folder name
+                // requires the ms-vscode.cpptools extension; for make/CMake projects
+                // or any prebuilt binary (build it with -g first). Asks for the path
+                // on each launch; to skip the prompt, hard-code "program" and set
+                // "preLaunchTask" to the project's build task.
+                "name": "C/C++: Debug program (gdb)",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceFolder}/${input:cProgram}",
+                "args": [],
+                "cwd": "${workspaceFolder}",
+                "MIMode": "gdb",
+                "setupCommands": [
+                    {
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true,
+                    },
+                ],
+            },
+            {
+                // requires the vadimcn.vscode-lldb extension; cargo picks the
+                // binary, so the package name needn't match the folder name
                 "name": "Rust: Debug executable (cargo build)",
                 "type": "lldb",
                 "request": "launch",
-                "program": "${workspaceFolder}/target/debug/${workspaceFolderBasename}",
-                "cwd": "${workspaceFolder}",
-                "preLaunchTask": "Rust: cargo build",
-            },
-            {
-                // requires the rogalmic.bash-debug extension
-                "name": "Bash: Debug current script (bashdb)",
-                "type": "bashdb",
-                "request": "launch",
-                "program": "${file}",
-                "cwd": "${workspaceFolder}",
+                "cargo": {
+                    "args": [
+                        "build",
+                    ],
+                    // a lib+bin package yields two artifacts; keep the binary
+                    "filter": {
+                        "kind": "bin",
+                    },
+                },
                 "args": [],
-                "terminalKind": "integrated",
+                "cwd": "${workspaceFolder}",
+            },
+        ],
+        "inputs": [
+            {
+                "id": "cProgram",
+                "type": "promptString",
+                "description": "Executable to debug, relative to the workspace root",
+                "default": "build/main",
             },
         ],
     },
